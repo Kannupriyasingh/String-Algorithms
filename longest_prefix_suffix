@@ -1,0 +1,46 @@
+***********************************************************************
+input  : adadabadadabadadad
+output : 0 0 1 2 3 0 1 2 3 4 5 6 7 8 9 10 11 4
+***********************************************************************
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int* longest_prefix_suffix(string s, int n)
+{
+    int *output = new int[n];
+    output[0] = 0;
+    int i = 1, j = 0;
+    while(i < n)
+    {
+        if(s[i] == s[j])
+        {
+            output[i] = j + 1;
+            i++;
+            j++;
+        }
+        else
+        {
+            if(j == 0)
+            {
+                output[i] = 0;
+                i++;
+            }
+            else
+            {
+                j = output[j - 1];
+            }
+        }
+    }
+    return output;
+}
+int main()
+{
+   string s;
+   cin >> s;
+   int n = s.length();
+   int *output = new int[n];
+   output = longest_prefix_suffix(s, n);
+   for(int i = 0; i < n; i++)
+   cout << output[i] << " ";
+}
