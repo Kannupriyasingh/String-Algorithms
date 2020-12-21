@@ -6,6 +6,8 @@ output : true
 input  : s -> abcxabcdabcdabcy
          p -> abcdabcx
 output : false
+
+Time complexity = O(n)
 *************************************************************************************
 
 #include<bits/stdc++.h>
