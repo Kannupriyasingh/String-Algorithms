@@ -2,6 +2,10 @@
 input  : s -> abcxabcdabcdabcy
          p -> abcdabcy
 output : true
+
+input  : s -> abcxabcdabcdabcy
+         p -> abcdabcx
+output : false
 *************************************************************************************
 
 #include<bits/stdc++.h>
