@@ -43,4 +43,6 @@ int main()
    output = longest_prefix_suffix(s, n);
    for(int i = 0; i < n; i++)
    cout << output[i] << " ";
+   delete [] output;
+   return 0;
 }
