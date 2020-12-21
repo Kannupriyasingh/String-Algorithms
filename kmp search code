@@ -1,0 +1,76 @@
+*************************************************************************************
+input  : s -> abcxabcdabcdabcy
+         p -> abcdabcy
+output : true
+*************************************************************************************
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int* longest_prefix_suffix(string s, int n)
+{
+    int *output = new int[n];
+    output[0] = 0;
+    int i = 1, j = 0;
+    while(i < n)
+    {
+        if(s[i] == s[j])
+        {
+            output[i] = j + 1;
+            i++;
+            j++;
+        }
+        else
+        {
+            if(j == 0)
+            {
+                output[i] = 0;
+                i++;
+            }
+            else
+            {
+                j = output[j - 1];
+            }
+        }
+    }
+    return output;
+}
+bool kmp_search(string s, string p)
+{
+    int n = s.length(), m = p.length();
+    int *lsp = new int[m];
+    lsp = longest_prefix_suffix(p, m);
+    int i = 0;
+    int j = 0;
+    while(i < n && j < m)
+    {
+        if(s[i] == p[j])
+        {
+            i++;
+            j++;
+        }
+        else
+        {
+            if(j != 0)
+            {
+                j = lsp[j - 1];
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
+    delete [] lsp;
+    
+    if(j == m)
+    return true;
+    else
+    return false;
+}
+int main()
+{
+   string s, p;
+   cin >> s >> p;
+   cout << kmp_search(s, p);
+}
