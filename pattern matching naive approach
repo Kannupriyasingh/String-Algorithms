@@ -6,6 +6,8 @@ output : true;
 input  : s -> abcgfh
          p -> klp
 output : false
+
+Time Complexity : O(n*m)
 ****************************************************************************************
 
 #include<bits/stdc++.h>
