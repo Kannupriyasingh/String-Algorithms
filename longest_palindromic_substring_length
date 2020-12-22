@@ -1,0 +1,53 @@
+************************************************************************************************************
+Input  : s -> abababece
+Output : 5
+
+Input  : s -> ababbabcba
+Output : 6
+************************************************************************************************************
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int longest_palindrome_substring(string s)
+{
+    int n = s.length();
+    int max_length = 0;
+    for(int i = 0; i < n; i++)
+    {
+        //Odd length
+        int l = i;
+        int r = i;
+        while(l >= 0 && r < n && s[l] == s[r])
+        {
+            int curr_len = r-l+1;
+            if(curr_len > max_length)
+            max_length = curr_len;
+            
+            l--;
+            r++;
+        }
+        
+        //Even length
+        l = i;
+        r = i+1;
+        while(l >= 0 && r < n && s[l] == s[r])
+        {
+            int curr_len = r-l+1;
+            if(curr_len > max_length)
+            max_length = curr_len;
+            
+            l--;
+            r++;
+        }
+    }
+    
+    return max_length;
+}
+int main()
+{
+    string s;
+    cin >> s;
+    cout << longest_palindrome_substring(s);
+    return 0;
+}
