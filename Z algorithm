@@ -1,0 +1,85 @@
+*********************************************************************************************
+Input :  text -> abcdsafbcdfasbcda
+         pattern - > bcd
+Output : 1
+         7
+         13
+//output is the index in text from where pattern is matching
+**********************************************************************************************
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+using namespace std;
+void buildZ(int *Z, string s)
+{
+    int l = 0, r = 0;
+   int n = s.length();
+   for(int i = 0; i < n; i++)
+   {
+       if(i > r)
+       {//i doesn't lies between l and r-l
+       //Z for this doesn't exist
+           l = i;
+           r = i;
+           while(r < n && s[r-l] == s[r])
+           {
+               r++;
+           }
+           Z[i] = r-l;
+           r--;
+       }
+       else
+       {
+           int k = i-l;
+           if(Z[k] <= r-i)
+           { //i lies between l and r 
+             //Z exists previously
+               Z[i] = Z[k];
+           }
+           else
+           {
+               //Some part of Z is already included
+               //have to start matching further
+               l = i;
+               while(r < n && s[r-l] == s[r])
+               {
+                   r++;
+               }
+               Z[i] = r-l;
+               r--;
+           }
+           
+       }
+   }
+   
+}
+
+void search_string(string text, string pattern)
+{
+    string s = pattern + "$" + text; //concatenation
+    int n = s.length();
+    int *Z = new int[n](); //initialize whole array with 0
+    buildZ(Z, s);
+    for(int i = 0; i < n; i++)
+    {
+        if(Z[i] == pattern.length())
+        {
+            cout << (i - pattern.length() - 1) << endl;
+        }
+    }
+    delete [] Z;
+}
+
+int main()
+{
+   string text, pattern;
+   cin >> text >>pattern;
+   search_string(text, pattern);
+   return 0;
+}
