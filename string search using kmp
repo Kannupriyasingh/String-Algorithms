@@ -1,0 +1,94 @@
+****************************************************************************************************************************
+Given two strings S and T, write a function to find if T is present as a substring inside S or not. If yes, return the starting index otherwise return -1.
+Input format :
+Line 1 : String S
+Line 2 : String T
+
+Sample Input 1:
+WelcomeBack
+come 
+Sample Output 1:
+3
+Sample Input 2:
+WelcomeBack
+code
+Sample Output 2:
+-1
+****************************************************************************************************************************
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int* longest_prefix_suffix(char s[], int n)
+{
+    int *output = new int[n];
+    output[0] = 0;
+    int i = 1, j = 0;
+    while(i < n)
+    {
+        if(s[i] == s[j])
+        {
+            output[i] = j + 1;
+            i++;
+            j++;
+        }
+        else
+        {
+            if(j == 0)
+            {
+                output[i] = 0;
+                i++;
+            }
+            else
+            {
+                j = output[j - 1];
+            }
+        }
+    }
+    return output;
+}
+int findString(char S[], char T[])
+{
+    //int n = S.size(), m = T.size();
+    //size_t n = sizeof(S)/sizeof(S[0]);
+    int n = 0, m = 0;
+    for(int i = 0; S[i] != '\0'; ++i)
+        ++n;
+    for(int i = 0; T[i] != '\0'; ++i)
+        ++m;
+   
+    int *lsp = new int[m];
+    lsp = longest_prefix_suffix(T, m);
+    int i = 0;
+    int j = 0;
+    int ans;
+    while(i < n && j < m)
+    {
+        if(S[i] == T[j])
+        {
+            if(j == m - 1)
+            {
+                ans = i - m + 1;
+            }
+            i++;
+            j++;
+        }
+        
+        else
+        {
+            if(j != 0)
+            {
+                j = lsp[j - 1];
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
+    delete [] lsp;
+    if(j == m)
+    return ans;
+    else
+    return -1;
+}
